@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PropertiesComponent">{}</component>
+  <component name="RunManager" selected="Spring Boot.TareaApplication">
+    <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ApiGatewayApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.espe.moviles.ApiGatewayApplication.ApiGatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CompletadoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="completado" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.espe.distri.gestionproyectos.completado.CompletadoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="EurekaServerApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.espe.moviles.EurekaServerApplication.EurekaServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProyectoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="proyecto" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.espe.distri.gestionproyectos.proyecto.ProyectoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TareaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="tarea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.espe.distri.gestionproyectos.tarea.TareaApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UsuarioApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="usuario" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.espe.distri.gestionproyectos.usuario.UsuarioApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+</project>
