@@ -137,8 +137,8 @@ public class TareaServiceImpl implements TareaService {
         return Optional.empty();  // Si no tiene ningún usuario asignado
     }
 
-    public Optional<Tarea> findTareaByUsuarioId(Long usuarioId) {
-        return tareaRepository.findTareaByUsuarioId(usuarioId); // Suponiendo que tienes una consulta personalizada
+    public List<Tarea> findTareasByUsuarioId(Long usuarioId) {
+        return tareaRepository.findTareasByUsuarioId(usuarioId);
     }
 
     public Optional<TareaProyecto> assignProyecto(Long tareaId, Long proyectoId) {
@@ -211,9 +211,8 @@ public class TareaServiceImpl implements TareaService {
         return Optional.empty();  // Si no tiene ningún proyecto asignado
     }
 
-    public Optional<Tarea> findTareaByProyectoId(Long proyectoId) {
-        return tareaRepository.findTareaByProyectoId(proyectoId); // Suponiendo que tienes una consulta personalizada
+    public List<Tarea> findTareasByProyectoId(Long proyectoId) {
+        return tareaRepository.findTareasByProyectoId(proyectoId);
     }
-
 
 }

@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CompletadoRepository extends JpaRepository<Completado, Long> {
     // Puedes agregar métodos personalizados aquí si es necesario
 
     @Query("SELECT o FROM Completado o JOIN o.completadoTarea oj WHERE oj.tareaId = :tareaId")
-    Optional<Completado> findCompletadoByTareaId(@Param("tareaId") Long tareaId);
+    List<Completado> findCompletadosByTareaId(@Param("tareaId") Long tareaId);
 
 }

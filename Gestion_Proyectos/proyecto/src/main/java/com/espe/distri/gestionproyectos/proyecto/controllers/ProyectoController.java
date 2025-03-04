@@ -85,10 +85,10 @@ public class ProyectoController {
     }
 
     @GetMapping("/usuariosOf/{usuarioId}")
-    public ResponseEntity<Proyecto> findProyectoByUsuarioId(@PathVariable Long usuarioId) {
-        Optional<Proyecto> proyecto = proyectoService.findProyectoByUsuarioId(usuarioId);
-        if (proyecto.isPresent()) {
-            return ResponseEntity.ok(proyecto.get());
+    public ResponseEntity<List<Proyecto>> findProyectosByUsuarioId(@PathVariable Long usuarioId) {
+        List<Proyecto> proyectos = proyectoService.findProyectosByUsuarioId(usuarioId);
+        if (!proyectos.isEmpty()) {
+            return ResponseEntity.ok(proyectos);
         }
         return ResponseEntity.notFound().build();
     }

@@ -21,12 +21,12 @@ public interface TareaService {
     Optional<TareaUsuario> assignUsuario(Long tareaId, Long usuarioId);
     void deleteTareaUsuario(Long tareaId, Long usuarioId);
     Optional<UsuarioDTO> findUsuarioByTareaId(Long tareaId);
-    Optional<Tarea> findTareaByUsuarioId(Long usuarioId);
+    List<Tarea> findTareasByUsuarioId(Long usuarioId);
 
     Optional<TareaProyecto> assignProyecto(Long tareaId, Long proyectoId);
     void deleteTareaProyecto(Long tareaId, Long proyectoId);
     Optional<ProyectoDTO> findProyectoByTareaId(Long tareaId);
-    Optional<Tarea> findTareaByProyectoId(Long proyectoId);
+    List<Tarea> findTareasByProyectoId(Long proyectoId);
 
 
 

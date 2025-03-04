@@ -134,8 +134,8 @@ public class ProyectoServiceImpl implements ProyectoService {
         return Optional.empty();  // Si no tiene ningún usuario asignado
     }
 
-    public Optional<Proyecto> findProyectoByUsuarioId(Long usuarioId) {
-        return proyectoRepository.findProyectoByUsuarioId(usuarioId); // Suponiendo que tienes una consulta personalizada
+    public List<Proyecto> findProyectosByUsuarioId(Long usuarioId) {
+        return proyectoRepository.findProyectosByUsuarioId(usuarioId);
     }
 
 

@@ -70,10 +70,10 @@ public class CompletadoController {
     }
 
     @GetMapping("/tareasOf/{tareaId}")
-    public ResponseEntity<Completado> findCompletadoByTareaId(@PathVariable Long tareaId) {
-        Optional<Completado> completado = completadoService.findCompletadoByTareaId(tareaId);
-        if (completado.isPresent()) {
-            return ResponseEntity.ok(completado.get());
+    public ResponseEntity<List<Completado>> findCompletadosByTareaId(@PathVariable Long tareaId) {
+        List<Completado> completados = completadoService.findCompletadosByTareaId(tareaId);
+        if (!completados.isEmpty()) {
+            return ResponseEntity.ok(completados);
         }
         return ResponseEntity.notFound().build();
     }

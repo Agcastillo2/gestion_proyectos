@@ -87,10 +87,10 @@ public class TareaController {
     }
 
     @GetMapping("/usuariosOf/{usuarioId}")
-    public ResponseEntity<Tarea> findTareaByUsuarioId(@PathVariable Long usuarioId) {
-        Optional<Tarea> tarea = tareaService.findTareaByUsuarioId(usuarioId);
-        if (tarea.isPresent()) {
-            return ResponseEntity.ok(tarea.get());
+    public ResponseEntity<List<Tarea>> findTareasByUsuarioId(@PathVariable Long usuarioId) {
+        List<Tarea> tareas = tareaService.findTareasByUsuarioId(usuarioId);
+        if (!tareas.isEmpty()) {
+            return ResponseEntity.ok(tareas);
         }
         return ResponseEntity.notFound().build();
     }
@@ -120,10 +120,10 @@ public class TareaController {
     }
 
     @GetMapping("/proyectosOf/{proyectoId}")
-    public ResponseEntity<Tarea> findTareaByProyectoId(@PathVariable Long proyectoId) {
-        Optional<Tarea> tarea = tareaService.findTareaByProyectoId(proyectoId);
-        if (tarea.isPresent()) {
-            return ResponseEntity.ok(tarea.get());
+    public ResponseEntity<List<Tarea>> findTareasByProyectoId(@PathVariable Long proyectoId) {
+        List<Tarea> tareas = tareaService.findTareasByProyectoId(proyectoId);
+        if (!tareas.isEmpty()) {
+            return ResponseEntity.ok(tareas);
         }
         return ResponseEntity.notFound().build();
     }

@@ -19,6 +19,6 @@ public interface ProyectoService {
     Optional<ProyectoUsuario> assignUsuario(Long proyectoId, Long usuarioId);
     void deleteProyectoUsuario(Long proyectoId, Long usuarioId);
     Optional<UsuarioDTO> findUsuarioByProyectoId(Long proyectoId);
-    Optional<Proyecto> findProyectoByUsuarioId(Long usuarioId);
+    List<Proyecto> findProyectosByUsuarioId(Long usuarioId);
 
 }

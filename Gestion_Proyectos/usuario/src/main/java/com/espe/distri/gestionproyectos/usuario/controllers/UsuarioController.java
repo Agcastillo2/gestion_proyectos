@@ -93,10 +93,10 @@ public class UsuarioController {
     }
 
     @GetMapping("/rolesOf/{rolId}")
-    public ResponseEntity<Usuario> findUsuarioByRolId(@PathVariable Long rolId) {
-        Optional<Usuario> usuario = usuarioService.findUsuarioByRolId(rolId);
-        if (usuario.isPresent()) {
-            return ResponseEntity.ok(usuario.get());
+    public ResponseEntity<List<Usuario>> findUsuariosByRolId(@PathVariable Long rolId) {
+        List<Usuario> usuarios = usuarioService.findUsuariosByRolId(rolId);
+        if (!usuarios.isEmpty()) {
+            return ResponseEntity.ok(usuarios);
         }
         return ResponseEntity.notFound().build();
     }

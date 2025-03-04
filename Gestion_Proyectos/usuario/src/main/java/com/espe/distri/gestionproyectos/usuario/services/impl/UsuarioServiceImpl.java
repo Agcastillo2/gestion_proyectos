@@ -137,8 +137,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         return Optional.empty();  // Si no tiene ningún rol asignado
     }
 
-    public Optional<Usuario> findUsuarioByRolId(Long rolId) {
-        return usuarioRepository.findUsuarioByRolId(rolId); // Suponiendo que tienes una consulta personalizada
+    public List<Usuario> findUsuariosByRolId(Long rolId) {
+        return usuarioRepository.findUsuariosByRolId(rolId);
     }
 
 }

@@ -18,6 +18,6 @@ public interface CompletadoService {
     Optional<CompletadoTarea> assignTarea(Long completadoId, Long tareaId);
     void deleteCompletadoTarea(Long completadoId, Long tareaId);
     Optional<TareaDTO> findTareaByCompletadoId(Long completadoId);
-    Optional<Completado> findCompletadoByTareaId(Long tareaId);
+    List<Completado> findCompletadosByTareaId(Long tareaId);
 
 }

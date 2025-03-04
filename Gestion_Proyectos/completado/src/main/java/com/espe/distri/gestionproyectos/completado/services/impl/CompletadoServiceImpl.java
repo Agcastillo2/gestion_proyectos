@@ -126,8 +126,8 @@ public class CompletadoServiceImpl implements CompletadoService {
         return Optional.empty();  // Si no tiene ninguna tarea asignada
     }
 
-    public Optional<Completado> findCompletadoByTareaId(Long tareaId) {
-        return completadoRepository.findCompletadoByTareaId(tareaId); // Suponiendo que tienes una consulta personalizada
+    public List<Completado> findCompletadosByTareaId(Long tareaId) {
+        return completadoRepository.findCompletadosByTareaId(tareaId);
     }
 
 }

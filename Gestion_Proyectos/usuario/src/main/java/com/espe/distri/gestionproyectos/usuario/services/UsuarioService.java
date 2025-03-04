@@ -18,5 +18,5 @@ public interface UsuarioService {
     Optional<UsuarioRol> assignRol(Long usuarioId, Long rolId);
     void deleteUsuarioRol(Long usuarioId, Long rolId);
     Optional<RolDTO> findRolByUsuarioId(Long usuarioId);
-    Optional<Usuario> findUsuarioByRolId(Long rolId);
+    List<Usuario> findUsuariosByRolId(Long rolId);
 }
