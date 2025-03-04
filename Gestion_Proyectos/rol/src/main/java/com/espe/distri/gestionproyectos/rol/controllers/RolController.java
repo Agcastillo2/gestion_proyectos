@@ -55,9 +55,8 @@ public class RolController {
         return new ResponseEntity<>(exists, HttpStatus.OK);
     }
 
-    // Método para modificar un rol
     @PutMapping("/{id}")
-    public ResponseEntity<?> modificarRol(@PathVariable Long id, @RequestBody Rol rol) {
+    public ResponseEntity<?> updateRol(@PathVariable Long id, @RequestBody Rol rol) {
         // Verificar si el nombre del rol ya existe antes de modificarlo
         if (rolService.existsByNombreRol(rol.getNombreRol()) &&
                 rolService.getRolById(id).map(existingRol -> !existingRol.getNombreRol().equals(rol.getNombreRol())).orElse(false)) {
@@ -66,10 +65,10 @@ public class RolController {
         }
 
         // Modificar el rol si no hay conflictos
-        Rol rolModificado = rolService.modificarRol(id, rol);
+        Rol rolUpdate = rolService.updateRol(id, rol);
 
-        if (rolModificado != null) {
-            return ResponseEntity.ok(rolModificado);
+        if (rolUpdate != null) {
+            return ResponseEntity.ok(rolUpdate);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "Rol no encontrado"));

@@ -41,7 +41,7 @@ public class RolServiceImpl implements RolService {
     }
 
     @Override
-    public Rol modificarRol(Long idRol, Rol nuevoRol) {
+    public Rol updateRol(Long idRol, Rol nuevoRol) {
         // Verificar si el nombre del rol ya existe (excepto el rol con el idRol actual)
         if (rolRepository.existsByNombreRol(nuevoRol.getNombreRol()) &&
                 rolRepository.findById(idRol).map(rol -> !rol.getNombreRol().equals(nuevoRol.getNombreRol())).orElse(true)) {

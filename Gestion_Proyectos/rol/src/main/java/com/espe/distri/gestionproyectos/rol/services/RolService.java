@@ -12,6 +12,5 @@ public interface RolService {
     void deleteRol(Long id); // Eliminar un rol por su ID
     boolean existsByNombreRol(String nombreRol); // Verificar si ya existe un rol con el mismo nombre
 
-    // Método para modificar un rol
-    Rol modificarRol(Long idRol, Rol nuevoRol); // Modificar un rol existente
+    Rol updateRol(Long idRol, Rol nuevoRol); // Modificar un rol existente
 }

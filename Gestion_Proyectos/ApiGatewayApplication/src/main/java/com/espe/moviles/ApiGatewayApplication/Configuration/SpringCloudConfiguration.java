@@ -16,6 +16,15 @@ public class SpringCloudConfiguration {
                 .route("usuario", r -> r.path("/api/usuarios/**")
                         .uri("http://localhost:8002")
                 )
+                .route("proyecto", r -> r.path("/api/proyectos/**")
+                        .uri("http://localhost:8003")
+                )
+                .route("tarea", r -> r.path("/api/tareas/**")
+                        .uri("http://localhost:8004")
+                )
+                .route("completado", r -> r.path("/api/completados/**")
+                        .uri("http://localhost:8005")
+                )
                 .build();
     }
 }

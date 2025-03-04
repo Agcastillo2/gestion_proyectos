@@ -1,4 +1,4 @@
-package com.espe.moviles.bckmoviles.config;
+package com.espe.distri.gestionproyectos.rol.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
