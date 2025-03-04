@@ -34,6 +34,9 @@ public class Usuario {
     @Column(name = "fecha_registro", updatable = false)
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 
+    /*@Column(name = "oauth_provider", nullable = true)
+    private String oauthProvider; // "github" para usuarios registrados con GitHub*/
+
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "usuario_id")
     private UsuarioRol usuarioRol;

@@ -15,12 +15,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Protege rutas de admin
-                        .requestMatchers("/user/**").hasRole("USER") // Protege rutas de usuario
+                        .requestMatchers("/api/usuarios").permitAll() // Permitir registro manual
                         .anyRequest().authenticated() // Cualquier otra ruta requiere autenticación
                 )
-                .oauth2Login(withDefaults()); // Activa autenticación con GitHub
+                .oauth2Login(withDefaults()); // Habilitar autenticación con GitHub
 
         return http.build();
     }
