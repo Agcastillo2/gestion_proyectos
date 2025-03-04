@@ -1,0 +1,141 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: gestion_proyectos
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - microservices-net
+
+  # Eureka Server
+  eureka-server:
+    image: eureka-server
+    build:
+      context: ./EurekaServerApplication  # Ruta corregida
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    networks:
+      - microservices-net
+
+  # API Gateway
+  api-gateway:
+    image: api-gateway
+    build:
+      context: ./ApiGatewayApplication  # Ruta corregida
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8083/eureka
+    depends_on:
+      - eureka-server
+    networks:
+      - microservices-net
+
+  # Microservices
+  completado:
+    image: completado
+    build:
+      context: ./completado
+      dockerfile: Dockerfile
+    ports:
+      - "8005:8005"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8083/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/gestion_proyectos
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - microservices-net
+
+  proyecto:
+    image: proyecto
+    build:
+      context: ./proyecto
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8003"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8083/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/gestion_proyectos
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - microservices-net
+
+  rol:
+    image: rol
+    build:
+      context: ./rol
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8083/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/gestion_proyectos
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - microservices-net
+
+  tarea:
+    image: tarea
+    build:
+      context: ./tarea
+      dockerfile: Dockerfile
+    ports:
+      - "8004:8004"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8083/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/gestion_proyectos
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - microservices-net
+
+  usuario:
+    image: usuario
+    build:
+      context: ./usuario
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8083/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/gestion_proyectos
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  postgres-data:
