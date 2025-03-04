@@ -1,5 +1,6 @@
 package com.espe.distri.gestionproyectos.completado.models;
 
+import com.espe.distri.gestionproyectos.completado.models.relacion.CompletadoTarea;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -29,9 +30,21 @@ public class Completado {
     @Column(name = "comentarios", length = 500)
     private String comentarios;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "idTarea ")
+    private CompletadoTarea completadoTarea;
+
     @PrePersist
     public void prePersist() {
         this.fechaActualizacion = LocalDateTime.now();
+    }
+
+    public CompletadoTarea getCompletadoTarea() {
+        return completadoTarea;
+    }
+
+    public void setCompletadoTarea(CompletadoTarea completadoTarea) {
+        this.completadoTarea = completadoTarea;
     }
 
     public Long getIdCompletado() {

@@ -8,10 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -26,10 +22,13 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<?> createUsuario(@RequestBody Usuario usuario) {
+        // Verificar si el email ya existe antes de guardarlo
         if (usuarioService.existsByEmail(usuario.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("error", "El correo electrónico ya está en uso"));
         }
+
+        // Guardar el usuario si no está duplicado
         Usuario savedUsuario = usuarioService.saveUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUsuario);
     }
@@ -41,14 +40,12 @@ public class UsuarioController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')") // Solo los administradores pueden ver todos los usuarios
     public ResponseEntity<List<Usuario>> getAllUsuarios() {
         List<Usuario> usuarios = usuarioService.getAllUsuarios();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')") // Solo los administradores pueden eliminar usuarios
     public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
         usuarioService.deleteUsuario(id);
         return ResponseEntity.noContent().build();
@@ -61,15 +58,19 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> modificarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+    public ResponseEntity<?> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        // Verificar si el email ya está en uso antes de modificarlo
         if (usuarioService.existsByEmail(usuario.getEmail()) &&
                 usuarioService.getUsuarioById(id).map(existingUsuario -> !existingUsuario.getEmail().equals(usuario.getEmail())).orElse(false)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("error", "El correo electrónico ya está en uso"));
         }
-        Usuario usuarioModificado = usuarioService.modificarUsuario(id, usuario);
-        if (usuarioModificado != null) {
-            return ResponseEntity.ok(usuarioModificado);
+
+        // Modificar el usuario si no hay conflictos
+        Usuario usuarioUpdate = usuarioService.updateUsuario(id, usuario);
+
+        if (usuarioUpdate != null) {
+            return ResponseEntity.ok(usuarioUpdate);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "Usuario no encontrado"));
@@ -77,7 +78,6 @@ public class UsuarioController {
     }
 
     @PostMapping("/{usuarioId}/rolesOf/{rolId}")
-    @PreAuthorize("hasRole('ADMIN')") // Solo los administradores pueden asignar roles
     public ResponseEntity<UsuarioRol> assignRol(@PathVariable Long usuarioId, @PathVariable Long rolId) {
         Optional<UsuarioRol> rolAssigned = usuarioService.assignRol(usuarioId, rolId);
         if (rolAssigned.isPresent()) {
@@ -87,7 +87,6 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{usuarioId}/rolesOf/{rolId}")
-    @PreAuthorize("hasRole('ADMIN')") // Solo los administradores pueden eliminar roles de usuarios
     public ResponseEntity<Void> deleteUsuarioRol(@PathVariable Long usuarioId, @PathVariable Long rolId) {
         usuarioService.deleteUsuarioRol(usuarioId, rolId);
         return ResponseEntity.noContent().build();
@@ -111,16 +110,4 @@ public class UsuarioController {
         return ResponseEntity.notFound().build();
     }
 
-    // Rutas específicas para administradores y usuarios autenticados
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminDashboard() {
-        return "Bienvenido, administrador.";
-    }
-
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER')")
-    public String userDashboard() {
-        return "Bienvenido, usuario autenticado.";
-    }
 }

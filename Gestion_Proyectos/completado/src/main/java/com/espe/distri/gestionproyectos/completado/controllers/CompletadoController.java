@@ -1,6 +1,8 @@
 package com.espe.distri.gestionproyectos.completado.controllers;
 
 import com.espe.distri.gestionproyectos.completado.models.Completado;
+import com.espe.distri.gestionproyectos.completado.models.DTO.TareaDTO;
+import com.espe.distri.gestionproyectos.completado.models.relacion.CompletadoTarea;
 import com.espe.distri.gestionproyectos.completado.services.CompletadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,4 +53,38 @@ public class CompletadoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/{completadoId}/tareasOf/{tareaId}")
+    public ResponseEntity<CompletadoTarea> assignTarea(@PathVariable Long completadoId, @PathVariable Long tareaId) {
+        Optional<CompletadoTarea> tareaAssigned = completadoService.assignTarea(completadoId, tareaId);
+        if (tareaAssigned.isPresent()) {
+            return ResponseEntity.ok(tareaAssigned.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{completadoId}/tareasOf/{tareaId}")
+    public ResponseEntity<Void> deleteCompletadoTarea(@PathVariable Long completadoId, @PathVariable Long tareaId) {
+        completadoService.deleteCompletadoTarea(completadoId, tareaId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/tareasOf/{tareaId}")
+    public ResponseEntity<Completado> findCompletadoByTareaId(@PathVariable Long tareaId) {
+        Optional<Completado> completado = completadoService.findCompletadoByTareaId(tareaId);
+        if (completado.isPresent()) {
+            return ResponseEntity.ok(completado.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{completadoId}/tareasOf")
+    public ResponseEntity<TareaDTO> findTareaByCompletadoId(@PathVariable Long completadoId) {
+        Optional<TareaDTO> tarea = completadoService.findTareaByCompletadoId(completadoId);
+        if (tarea.isPresent()) {
+            return ResponseEntity.ok(tarea.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

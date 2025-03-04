@@ -1,5 +1,6 @@
 package com.espe.distri.gestionproyectos.proyecto.models;
 
+import com.espe.distri.gestionproyectos.proyecto.models.relacion.ProyectoUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -39,6 +40,18 @@ public class Proyecto {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoProyecto estado;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "idGerente ")
+    private ProyectoUsuario proyectoUsuario;
+
+    public ProyectoUsuario getProyectoUsuario() {
+        return proyectoUsuario;
+    }
+
+    public void setProyectoUsuario(ProyectoUsuario proyectoUsuario) {
+        this.proyectoUsuario = proyectoUsuario;
+    }
 
     // Enum para el estado del proyecto
     public enum EstadoProyecto {

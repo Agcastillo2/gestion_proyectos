@@ -47,7 +47,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario modificarUsuario(Long id, Usuario nuevoUsuario) {
+    public Usuario updateUsuario(Long id, Usuario nuevoUsuario) {
         // Verificar si el email ya está en uso (excepto para el usuario actual)
         if (usuarioRepository.existsByEmail(nuevoUsuario.getEmail()) &&
                 usuarioRepository.findById(id).map(usuario -> !usuario.getEmail().equals(nuevoUsuario.getEmail())).orElse(false)) {

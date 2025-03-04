@@ -1,5 +1,7 @@
 package com.espe.distri.gestionproyectos.tarea.models;
 
+import com.espe.distri.gestionproyectos.tarea.models.relacion.TareaProyecto;
+import com.espe.distri.gestionproyectos.tarea.models.relacion.TareaUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -40,9 +42,33 @@ public class Tarea {
     @Column(name = "estado", nullable = false)
     private EstadoTarea estado;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "idProyecto ")
+    private TareaProyecto tareaProyecto;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "idResponsable ")
+    private TareaUsuario tareaUsuario;
+
     // Enum para el estado de la tarea
     public enum EstadoTarea {
         PENDIENTE, EN_PROGRESO, COMPLETADA
+    }
+
+    public TareaProyecto getTareaProyecto() {
+        return tareaProyecto;
+    }
+
+    public void setTareaProyecto(TareaProyecto tareaProyecto) {
+        this.tareaProyecto = tareaProyecto;
+    }
+
+    public TareaUsuario getTareaUsuario() {
+        return tareaUsuario;
+    }
+
+    public void setTareaUsuario(TareaUsuario tareaUsuario) {
+        this.tareaUsuario = tareaUsuario;
     }
 
     public Long getIdTarea() {

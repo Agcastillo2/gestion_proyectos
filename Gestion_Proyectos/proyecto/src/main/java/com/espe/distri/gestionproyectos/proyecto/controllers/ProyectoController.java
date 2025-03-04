@@ -1,6 +1,8 @@
 package com.espe.distri.gestionproyectos.proyecto.controllers;
 
+import com.espe.distri.gestionproyectos.proyecto.models.DTO.UsuarioDTO;
 import com.espe.distri.gestionproyectos.proyecto.models.Proyecto;
+import com.espe.distri.gestionproyectos.proyecto.models.relacion.ProyectoUsuario;
 import com.espe.distri.gestionproyectos.proyecto.services.ProyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,4 +68,40 @@ public class ProyectoController {
                     .body(Map.of("error", "Proyecto no encontrado"));
         }
     }
+
+    @PostMapping("/{proyectoId}/usuariosOf/{usuarioId}")
+    public ResponseEntity<ProyectoUsuario> assignUsuario(@PathVariable Long proyectoId, @PathVariable Long usuarioId) {
+        Optional<ProyectoUsuario> usuarioAssigned = proyectoService.assignUsuario(proyectoId, usuarioId);
+        if (usuarioAssigned.isPresent()) {
+            return ResponseEntity.ok(usuarioAssigned.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{proyectoId}/usuariosOf/{usuarioId}")
+    public ResponseEntity<Void> deleteProyectoUsuario(@PathVariable Long proyectoId, @PathVariable Long usuarioId) {
+        proyectoService.deleteProyectoUsuario(proyectoId, usuarioId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/usuariosOf/{usuarioId}")
+    public ResponseEntity<Proyecto> findProyectoByUsuarioId(@PathVariable Long usuarioId) {
+        Optional<Proyecto> proyecto = proyectoService.findProyectoByUsuarioId(usuarioId);
+        if (proyecto.isPresent()) {
+            return ResponseEntity.ok(proyecto.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{proyectoId}/usuariosOf")
+    public ResponseEntity<UsuarioDTO> findUsuarioByProyectoId(@PathVariable Long proyectoId) {
+        Optional<UsuarioDTO> usuario = proyectoService.findUsuarioByProyectoId(proyectoId);
+        if (usuario.isPresent()) {
+            return ResponseEntity.ok(usuario.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
 }

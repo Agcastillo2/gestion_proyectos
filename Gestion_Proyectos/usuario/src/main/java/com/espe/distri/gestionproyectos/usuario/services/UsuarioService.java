@@ -13,7 +13,7 @@ public interface UsuarioService {
     List<Usuario> getAllUsuarios(); // Obtener todos los usuarios
     void deleteUsuario(Long id); // Eliminar un usuario por su ID
     boolean existsByEmail(String email); // Verificar si ya existe un usuario con el mismo email
-    Usuario modificarUsuario(Long id, Usuario nuevoUsuario); // Modificar un usuario
+    Usuario updateUsuario(Long id, Usuario nuevoUsuario); // Modificar un usuario
 
     Optional<UsuarioRol> assignRol(Long usuarioId, Long rolId);
     void deleteUsuarioRol(Long usuarioId, Long rolId);
